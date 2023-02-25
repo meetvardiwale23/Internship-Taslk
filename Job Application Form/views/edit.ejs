@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/formdata" method="POST">
+        <div id="basic_detail_div">
+            <h2> Candidate Basic Detail</h2>
+            <div>
+                <% for(let i=0;i<basic_glob_data.length;i++) { %>
+                <table height=500px; width=800px; id="basic_detail_table">
+                    <tr>
+                        <td><label> First Name </label></td>
+                        <td><input type="text" placeholder="Enter your name" name="first_name"
+                                id="basic_detail_first_name" value="<%= basic_glob_data[i].first_name %>"> </td>
+
+                        <td><label> Last Name </label></td>
+                        <td><input type="text" placeholder="Enter your last name" name="last_name"
+                                id="basic_detail_last_name" value="<%= basic_glob_data[i].last_name %>"> </td>
+                    </tr>
+                    <tr>
+
+                    </tr>
+                    <tr>
+                        <td><label> Designation </label></td>
+                        <td><input type="text" placeholder="Enter your designation" name="designation"
+                                id="basic_detail_last_name" value="<%= basic_glob_data[i].designation %>"> </td>
+
+                        <td><label> Address </label></td>
+                        <td><textarea rows="5" cols="30 " id="basic_detail_address"
+                                name="address" value="<%= basic_glob_data[i].address %>"> </textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label> Email </label></td>
+                        <td><input type="email" placeholder="Enter your email" name="email" id="basic_detail_email" value="<%= basic_glob_data[i].email %>">
+                        </td>
+
+                        <td><label> Address 2</label></td>
+                        <td><textarea rows="5" cols="30 " id="basic_detail_address2">Enter your address </textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label> Phone Number </label></td>
+                        <td><input type="number" placeholder="Enter your number" name="phonenumber"
+                                id="basic_detail_Phone_number" value="<%= basic_glob_data[i].phone_number %>"></td>
+ 
+                        dropdown state
+                        <td><label> State </label></td>
+                        <td>
+                            <select id="basic_details_state" name="state">
+                                <option value="<%= basic_glob_data[i].state %>"><%= basic_glob_data[i].state %></option>
+                               
+                                <% for(let i=0;i<edit_state_data.length;i++) {%>
+                                    <% if(basic_glob_data[0].state != edit_state_data[i].state_name) { %>     
+                                        <%= console.log("xyz",basic_glob_data[0].state)%>
+                                    <option value="<%= edit_state_data[i].state_name %>">
+                                        <%= console.log("tgy",edit_state_data[i].state_name)%>
+                                        <%= edit_state_data[i].state_name %>
+                                    </option>
+                                
+                                    <% }%>
+                                <% } %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label> Gender </label>
+                        </td>
+
+                        <td>
+                            <input type="radio" id="basic_detail_male" name="gender" value="<%= basic_glob_data[i].gender %>">
+                            <label> Male </label>
+
+                            <input type="radio" id="basic_detail_female" name="gender" value="<%= basic_glob_data[i].gender %>">
+                            <label> Female </label>
+
+                            <input type="radio" id="basic_detail_other" name="gender" value="<%= basic_glob_data[i].gender %>">
+                            <label> Others </label>
+                        </td>
+
+                        <td>
+                            city dropdown
+                        </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                status drop down
+                            </td>
+                            
+        
+                            <td><label> Zip Code </label></td>
+                                <td><input type="number" placeholder="Enter your zipcode" name="zip_code"
+                                id="basic_detail_zipcode" value="<%= basic_glob_data[i].zipcode %>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label> Birth Date </label></td>
+                            <td><input type="date" name="dob" id="basic_detail_birthday" value="<%= basic_glob_data[i].DOB %>"></td>
+                        </tr>
+
+                    <% } %>
+                </table>
+                    </div>
+
+</body>
+</html>

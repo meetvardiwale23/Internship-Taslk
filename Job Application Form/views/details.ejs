@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <div id="aca_div">
+            <table id="aca_div" border="1">
+                <% for(let i=0;i<data.length;i++) {%>
+                <tr>
+                        <td><%= data[i].academic_id%></td>
+                        <td><%= data[i].course%></td>
+                        <td><%= data[i].university%></td>
+                        <td><%= data[i].passing%></td>
+                        <td><%= data[i].created_date%></td>
+                        <td><%= data[i].candidate_id%></td>
+                </tr>
+                <% } %>
+            </table>
+        </div>
+
+        <div id="work_exp_div">
+            <table id="work_exp_div" border="1">
+                <% for(let i=0;i<work_data.length;i++) {%>
+                <tr>
+                        <td><%= work_data[i].work_exp_id%></td>
+                        <td><%= work_data[i].course%></td>
+                        <td><%= work_data[i].university%></td>
+                        <td><%= work_data[i].passing%></td>
+                        <td><%= work_data[i].created_date%></td>
+                        <td><%= work_data[i].candidate_id%></td>
+                </tr>
+                <% } %>
+            </table>
+        </div>
+</body>
+</html>

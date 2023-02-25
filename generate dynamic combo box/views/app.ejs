@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color:rgb(51, 99, 51);
+    }
+    #data{
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+        margin-left: 350px;
+        height: 500px;
+        width: 600px;
+        background-color:rgb(1, 41, 1);
+    }
+    #data_table{
+        display: flex;
+        align-items: center;
+        margin: auto;
+        padding: 50px;
+        width: 600px;
+        height: 420px;
+        color: white;
+    }
+    tr{
+        height: 50px;
+        width: 80px;
+    }
+    td{
+        width: 280px;
+        border-color: aliceblue;
+    }
+</style>
+<body>
+
+        <div id="data">
+            
+        <form>
+            
+            <table id="data_table">
+                <h1 style="color: white; display: flex; justify-content: center; background-color: rgb(1, 41, 1);">Generated Dynamic Combobox</h1>
+                <tr>
+                    
+                    <td>
+                        <%- university %>
+                    </td>
+                    <td>
+                        <%- gender_name %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%- subject_name %>
+                    </td>
+                    <td>
+                        <%- college_name %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%- course_name %>
+                    </td>
+                    <td>
+                        <%- category_name %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%- relation_status %>
+                    </td>
+                    <td>
+                        <%- location_name %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%- result_status %>
+                    </td>
+                    <td>
+                        <%- lang_name %>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</body>
+</html>

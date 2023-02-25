@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>Document</title>
+</head>
+<style>
+    #title {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+    }
+
+    #menu_table {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        width: 33%;
+        color: #ffffff;
+    }
+
+    #search_div {
+        padding: 10px;
+    }
+
+    /* #menu_data{
+        padding: 10px;
+    } */
+    #data_table {
+        padding: 10px;
+        color: #ffffff; 
+
+    }
+
+    #dt_table {
+        padding: 10px;
+        border-color:wheat;
+    }
+
+body{
+    position: absolute;
+    /* align-items: center;
+    justify-content: center; */
+    padding-left: 500px;
+    top: 70%;
+    left: 30%;
+    margin: auto;
+    transform: translate(-50%,-50%);
+    background-color:rgb(1, 41, 1);
+}
+.progress{
+    position: relative;
+    height: 10px;
+    width: 30%;
+    margin: auto;
+    border: 10px solid #f4a261;
+    border-radius: 15px;
+}
+.progress .color{
+    position: absolute;
+    background-color: #ffffff;
+    width: 0px;
+    height: 10px;
+    border-radius: 15px;
+    animation: progres 4s infinite linear;    
+}
+@keyframes progres{
+    0%{
+      width: 0%;
+    }
+    25%{
+        width: 50%;
+    }
+    50%{
+        width: 75%;
+    }
+    75%{
+        width: 85%;
+    }
+    100%{
+        width: 100%;
+    }
+};
+
+
+</style>
+
+<body>
+    <div id="title">
+        <h1 style="color: #ffffff;">Job Application Form Data</h1>
+    </div>
+
+    <div id="search_div" style="display:flex; justify-content:center;">
+        <form action="/showdata" method="get">
+            <input type="text" placeholder="Search" id="search_data" name="search_data"
+                style="width: 200px; height: 30px;" value="<%= search_data %>">
+            <input type="submit" id="srch_btn" placeholder="GO">
+        </form>
+    </div>
+
+    <div id="men_data">
+        <table id="menu_table" border="3">
+            <tr>
+                <td>Use ^ For Firsrt Name</td>
+                <td>Use ^ For Last Name</td>
+                <td>Use ^ For Email </td>
+            </tr>
+        </table>
+    </div>
+    <form>
+        <div id="data_table">
+
+            <!-- <div class="progress">
+                 <div class="color"></div>
+            </div>   -->
+  
+            <table border=5 id="dt_table">
+                <th>Candidate No.</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Designation</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Phone Number</th>
+                <th>State</th>
+                <th>Gender</th>
+                <th>Relationship Status</th>
+                <th>Designation</th>
+                <th>Created Date</th>
+                <th>Zip Code</th>
+                <th>DOB</th>
+                <th>View Data</th>
+                <th>Delete Data</th>
+                <th>Edit Data</th>
+                <th>Check</th>
+                <% for(let i=0; i<whole_data.length;i++) { %>
+                    <tr>
+
+
+                        <td>
+                            <%= whole_data[i].candidate_id %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].first_name %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].last_name %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].designation %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].address %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].email %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].city %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].phone_number %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].state %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].gender %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].relation_status %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].designation %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].created_date.toJSON("yyyy-mm-dd").slice(0,10) %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].zipcode %>
+                        </td>
+                        <td>
+                            <%= whole_data[i].DOB %>
+                        </td>
+                        
+                        <td><a style="color: #ffffff; " href="/details?page=<%=i%>&id=<%= whole_data[i].candidate_id %>"><span class="material-symbols-outlined" style="font-size: 40px;">
+                            visibility
+                            </span></a> </td>
+
+                        <td>
+                            <p id="<%=whole_data[i].candidate_id%>" onclick="deleteAPI(this.id)"> <i
+                                    class="material-icons" style="font-size:48px;color:rgb(255, 198, 93);">delete</i></p>
+                        </td>
+
+                        <td><a style="color: #ffffff; " href="/edit?page=<%=i%>&id=<%= whole_data[i].candidate_id %>"><span class="material-symbols-outlined" style="font-size: 40px;">
+                            Edit </span>
+                        </a> 
+                        </td>
+                        
+                        <td><input type="checkbox" id="<%=whole_data[i].candidate_id%>"
+                                value="<%=whole_data[i].candidate_id%>"></td>
+                    </tr>
+
+                    <% } %>
+                    <tr>
+                        <td style="align-items: center;">
+                         
+                        </td>
+                </tr>
+            </table>
+        </div>    
+        <div id="dynamiclink" style="display: flex; justify-content: center;">
+            <table style="color:black;  font-size: 30px;">
+                <tr>
+                    <% for(let i=1;i<=counter;i++){ %>
+
+                    <td style="background-color: lightsteelblue; width:40px; ">
+                            <span style="display: flex; justify-content: center;" onclick= "pageOn(`/showdata/?page=<%= i%>&&AJAX=true`)" id="<%= i %>">
+                            <%= i %></span>  
+                    </td> 
+                
+                    <% } %>
+                </tr>
+            </table>
+    </div>
+            <div>
+                <p id="delAllAPI" onclick="deleteAllAPI()"> <i class="material-icons"
+                        style="font-size:48px;color:rgb(255, 198, 93); display: flex; justify-content: center;width: 50px; margin: auto; ">delete</i></p>
+            </div>
+        
+        
+    </form>
+
+
+</body>
+
+<script>
+    function deleteAPI(id) {
+        if (confirm("sure?") == true) {
+            fetch(`http://localhost:4080/delete?id=${id}`, {
+                method: 'POST'
+            }).done(
+                setTimeout(() => {
+                    window.location.reload()
+                }, 100)
+            )
+        }
+    }
+
+    function deleteAllAPI() {
+        var delArrData = document.querySelectorAll('input[type= "checkbox"]:checked');
+        var delArr = [];
+
+        for (var i = 0; i < delArrData.length; i++) {
+            var id = delArrData[i].id;
+            delArr.push(id);
+        }
+        console.log(delArr);
+        if (confirm("sure?") == true) {
+            fetch(`http://localhost:4080/deleteAll?id=${delArr}`, {
+                method: 'POST'
+            }).done(
+                setTimeout(() => {
+                    window.location.reload()
+                }, 100)
+            )
+        }
+
+    }
+    async function pageOn(id)
+    {
+        console.log(id);
+        var s =""
+        const pageData = await fetch(id);
+        const data =  await pageData.json();
+        console.log(data)
+
+        const table =  document.getElementById('dt_table');
+        
+        s += `
+        <tr>
+               <th>Candidate No.</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Designation</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Phone Number</th>
+                <th>State</th>
+                <th>Gender</th>
+                <th>Relationship Status</th>
+                <th>Designation</th>
+                <th>Created Date</th>
+                <th>Zip Code</th>
+                <th>DOB</th>
+                <th>View Data</th>
+                <th>Delete Data</th>
+                <th>Check</th>
+            </tr> `;
+                for(let i=0; i<data.length;i++) { 
+                        s+= `
+                    <tr>
+                        <td>
+                            ${data[i].candidate_id}
+                        </td>
+                        <td>
+                            ${data[i].first_name} 
+                        </td>
+                        <td>
+                            ${ data[i].last_name }
+                        </td>
+                        <td>
+                            ${data[i].designation}
+                        </td>
+                        <td>
+                            ${ data[i].address }
+                        </td>
+                        <td>
+                            ${ data[i].email}
+                        </td>
+                        <td>
+                            ${ data[i].city }
+                        </td>
+                        <td>
+                            ${ data[i].phone_number }
+                        </td>
+                        <td>
+                            ${ data[i].state }
+                        </td>
+                        <td>
+                            ${data[i].gender}
+                        </td>
+                        <td>
+                            ${ data[i].relation_status}
+                        </td>
+                        <td>
+                            ${ data[i].designation }
+                        </td>
+                        <td>
+                            ${data[i].created_date.slice(0,10)}
+                        </td>
+                        <td>
+                            ${data[i].zipcode}
+                        </td>
+                        <td>
+                            ${data[i].DOB}
+                        </td>
+                        <td><a href="/details?page=${i}&id=${data[i].candidate_id}">view data</a> </td>
+                        <td>
+                            <p id="${data[i].candidate_id}" onclick="deleteAPI(this.id)"> <i
+                                    class="material-icons" style="font-size:48px;color:red">delete</i></p>
+                        </td>
+                        <td><input type="checkbox" id="${data[i].candidate_id}"
+                                value="${data[i].candidate_id}"></td>
+                    </tr>`
+
+                     } 
+                    
+            table.innerHTML = s ;
+
+    }
+</script>
+
+</html>
