@@ -812,6 +812,9 @@ app.post('/update',async(req,res)=>{
    });
 
    // update and insert query for wacademics detail
+   await new Promise((resolve,reject)=>{
+     con.query(`UPDATE academic_detial SET company_name='${req.body.course}', WHERE candidate_id=${candidate_id}`)
+   })
 });
 
 app.listen(port, (err) => {
