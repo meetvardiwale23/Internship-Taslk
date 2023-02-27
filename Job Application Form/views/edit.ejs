@@ -1,110 +1,702 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    #education_tr {
+        width: 1200
+    }
+
+    body {
+        display: flex;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    #basic_detail_div {
+        justify-content: center;
+        margin: auto;
+        height: 600px;
+        width: 950px;
+        border: 1px solid lightGray;
+        background-color: whiteSmoke;
+        border-radius: 40px;
+    }
+
+    #basic_detail_table {
+        margin: auto;
+        justify-content: center;
+        text-align: center;
+    }
+
+    #work_exp_div {
+        justify-content: center;
+        margin: auto;
+        width: 1300px;
+        border: 1px solid;
+        background-color: whiteSmoke;
+        border-radius: 20px;
+        border: 1px solid lightGray;
+    }
+
+    #education_detail_div {
+        justify-content: center;
+        margin: auto;
+        width: 1250px;
+        border: 1px solid;
+        background-color: whiteSmoke;
+        border-radius: 20px;
+        border: 1px solid lightGray;
+    }
+
+    #language_detail_div {
+        justify-content: center;
+        margin: auto;
+        border: 1px solid;
+        width: 400px;
+        background-color: whiteSmoke;
+        border-radius: 20px;
+        border: 1px solid lightGray;
+    }
+
+    #tech_detail_div {
+        justify-content: center;
+        margin: auto;
+        border: 1px solid;
+        width: 400px;
+        background-color: whiteSmoke;
+        border-radius: 20px;
+        border: 1px solid lightGray;
+    }
+
+    #refrence_detail_div {
+        justify-content: center;
+        margin: auto;
+        border: 1px solid;
+        background-color: whiteSmoke;
+        border-radius: 20px;
+        border: 1px solid lightGray;
+    }
+
+    #prefrence_detail_div {
+        justify-content: center;
+        margin: auto;
+        border: 1px solid;
+        height: 100px;
+        padding-bottom: 10px;
+        background-color: whiteSmoke;
+        border-radius: 20px;
+        border: 1px solid lightGray;
+    }
+</style>
+
 <body>
-    <form action="/formdata" method="POST">
+    <form action="/update" method="POST">
+        
         <div id="basic_detail_div">
             <h2> Candidate Basic Detail</h2>
             <div>
                 <% for(let i=0;i<basic_glob_data.length;i++) { %>
-                <table height=500px; width=800px; id="basic_detail_table">
-                    <tr>
-                        <td><label> First Name </label></td>
-                        <td><input type="text" placeholder="Enter your name" name="first_name"
-                                id="basic_detail_first_name" value="<%= basic_glob_data[i].first_name %>"> </td>
+                    <input type="hidden" name="candidate_id" value="<%= basic_glob_data[i].candidate_id %>">
+                    <table height=500px; width=800px; id="basic_detail_table">
+                        <tr>
+                            <td><label> First Name </label></td>
+                            <td><input type="text" placeholder="Enter your name" name="first_name"
+                                    id="basic_detail_first_name" value="<%= basic_glob_data[i].first_name %>"> </td>
 
-                        <td><label> Last Name </label></td>
-                        <td><input type="text" placeholder="Enter your last name" name="last_name"
-                                id="basic_detail_last_name" value="<%= basic_glob_data[i].last_name %>"> </td>
-                    </tr>
-                    <tr>
+                            <td><label> Last Name </label></td>
+                            <td><input type="text" placeholder="Enter your last name" name="last_name"
+                                    id="basic_detail_last_name" value="<%= basic_glob_data[i].last_name %>"> </td>
+                        </tr>
+                        <tr>
 
-                    </tr>
-                    <tr>
-                        <td><label> Designation </label></td>
-                        <td><input type="text" placeholder="Enter your designation" name="designation"
-                                id="basic_detail_last_name" value="<%= basic_glob_data[i].designation %>"> </td>
+                        </tr>
+                        <tr>
+                            <td><label> Designation </label></td>
+                            <td><input type="text" placeholder="Enter your designation" name="designation"
+                                    id="basic_detail_last_name" value="<%= basic_glob_data[i].designation %>"> </td>
 
-                        <td><label> Address </label></td>
-                        <td><textarea rows="5" cols="30 " id="basic_detail_address"
-                                name="address" value="<%= basic_glob_data[i].address %>"> </textarea></td>
-                    </tr>
-                    <tr>
-                        <td><label> Email </label></td>
-                        <td><input type="email" placeholder="Enter your email" name="email" id="basic_detail_email" value="<%= basic_glob_data[i].email %>">
-                        </td>
+                            <td><label> Address </label></td>
+                            <td><input type="textarea" rows="5" cols="30 " id="basic_detail_address" name="address"
+                                    value="<%= basic_glob_data[i].address %>"></td>
+                        </tr>
+                        <tr>
+                            <td><label> Email </label></td>
+                            <td><input type="email" placeholder="Enter your email" name="email" id="basic_detail_email"
+                                    value="<%= basic_glob_data[i].email %>">
+                            </td>
 
-                        <td><label> Address 2</label></td>
-                        <td><textarea rows="5" cols="30 " id="basic_detail_address2">Enter your address </textarea></td>
-                    </tr>
-                    <tr>
-                        <td><label> Phone Number </label></td>
-                        <td><input type="number" placeholder="Enter your number" name="phonenumber"
-                                id="basic_detail_Phone_number" value="<%= basic_glob_data[i].phone_number %>"></td>
- 
-                        dropdown state
-                        <td><label> State </label></td>
-                        <td>
-                            <select id="basic_details_state" name="state">
-                                <option value="<%= basic_glob_data[i].state %>"><%= basic_glob_data[i].state %></option>
-                               
-                                <% for(let i=0;i<edit_state_data.length;i++) {%>
-                                    <% if(basic_glob_data[0].state != edit_state_data[i].state_name) { %>     
-                                        <%= console.log("xyz",basic_glob_data[0].state)%>
-                                    <option value="<%= edit_state_data[i].state_name %>">
-                                        <%= console.log("tgy",edit_state_data[i].state_name)%>
-                                        <%= edit_state_data[i].state_name %>
+                            <td><label> Address 2</label></td>
+                            <td><textarea rows="5" cols="30 " id="basic_detail_address2">Enter your address </textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label> Phone Number </label></td>
+                            <td><input type="number" placeholder="Enter your number" name="phonenumber"
+                                    id="basic_detail_Phone_number" value="<%= basic_glob_data[i].phone_number %>"></td>
+
+
+                            <td><label> State </label></td>
+                            <td>
+                                <select id="basic_details_state" name="state">
+                                    <option value="<%= basic_glob_data[i].state %>">
+                                        <%= basic_glob_data[i].state %>
                                     </option>
-                                
-                                    <% }%>
-                                <% } %>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label> Gender </label>
-                        </td>
 
-                        <td>
-                            <input type="radio" id="basic_detail_male" name="gender" value="<%= basic_glob_data[i].gender %>">
-                            <label> Male </label>
+                                    <% for(let i=0;i<edit_state_data.length;i++) {%>
+                                        <% if(basic_glob_data[0].state !=edit_state_data[i].state_name) { %>
 
-                            <input type="radio" id="basic_detail_female" name="gender" value="<%= basic_glob_data[i].gender %>">
-                            <label> Female </label>
+                                            <option value="<%= edit_state_data[i].state_name %>">
 
-                            <input type="radio" id="basic_detail_other" name="gender" value="<%= basic_glob_data[i].gender %>">
-                            <label> Others </label>
-                        </td>
+                                                <%= edit_state_data[i].state_name %>
+                                            </option>
 
-                        <td>
-                            city dropdown
-                        </td>
+                                            <% }%>
+                                                <% } %>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td>
-                                status drop down
+                                <label> Gender </label>
                             </td>
-                            
+
+                            <td>
+                                <% if(basic_glob_data[i].gender=="Male" ) {%>
+                                    <input type="radio" id="basic_detail_male" name="gender"
+                                        value="<%= basic_glob_data[i].gender %>" checked>
+                                    <label> Male </label>
+                                    <input type="radio" id="basic_detail_female" name="gender"
+                                        value="<%= basic_glob_data[i].gender %>">
+                                    <label> Female </label>
+                                    <input type="radio" id="basic_detail_other" name="gender"
+                                        value="<%= basic_glob_data[i].gender %>">
+                                    <label> Others </label>
+                                    <% } %>
+
+                                        <% if(basic_glob_data[i].gender=="Female" ) {%>
+                                            <input type="radio" id="basic_detail_male" name="gender"
+                                                value="<%= basic_glob_data[i].gender %>">
+                                            <label> Male </label>
+                                            <input type="radio" id="basic_detail_female" name="gender"
+                                                value="<%= basic_glob_data[i].gender %>" checked>
+                                            <label> Female </label>
+                                            <input type="radio" id="basic_detail_other" name="gender"
+                                                value="<%= basic_glob_data[i].gender %>">
+                                            <label> Others </label>
+                                            <% } %>
+
+                                                <% if(basic_glob_data[i].gender=="Others" ) {%>
+                                                    <input type="radio" id="basic_detail_male" name="gender"
+                                                        value="<%= basic_glob_data[i].gender %>">
+                                                    <label> Male </label>
+                                                    <input type="radio" id="basic_detail_female" name="gender"
+                                                        value="<%= basic_glob_data[i].gender %>">
+                                                    <label> Female </label>
+                                                    <input type="radio" id="basic_detail_other" name="gender"
+                                                        value="<%= basic_glob_data[i].gender %>" checked>
+                                                    <label> Others </label>
+                                                    <% } %>
+                            </td>
+
+
+                            <td><label> City </label></td>
+                            <td>
+                                <select id="basic_details_city" name="city">
+                                    <option value="<%= basic_glob_data[i].city %>">
+                                        <%= basic_glob_data[i].city %>
+                                    </option>
+
+                                    <% for(let i=0;i<edit_city_data.length;i++) {%>
+                                        <% if(basic_glob_data[0].city !=edit_city_data[i].city_name) { %>
+
+                                            <option value="<%= edit_city_data[i].city_name %>">
+
+                                                <%= edit_city_data[i].city_name %>
+                                            </option>
+
+                                            <% }%>
+                                                <% } %>
+                                </select>
+                                <script>
+                                    // js for dynamic cities
+                                    var state = document.getElementById('basic_details_state');
         
-                            <td><label> Zip Code </label></td>
-                                <td><input type="number" placeholder="Enter your zipcode" name="zip_code"
-                                id="basic_detail_zipcode" value="<%= basic_glob_data[i].zipcode %>">
+                                    state.addEventListener('click',()=>{
+        
+                                        var s="";
+                                        var city = document.getElementById('basic_details_city');
+                                        console.log(state.value);
+        
+                                        fetch(`/edit/city?stateName="${state.value}"`)
+                                        .then(res=>res.json())
+                                        .then((data)=>{
+                                            console.log("then")
+                                            for( var x of data)
+                                            {
+                                                s += ` <option value="" disabled selected hidden>Select city</option>
+                                                        <option value="${x.city_name}"> ${x.city_name}</option>`                                        
+                                            }
+        
+                                            city.innerHTML = s;
+                                        }).catch((err)=>{console.log("catch");console.error(err)});
+        
+                                    })
+                                </script>
                             </td>
                         </tr>
                         <tr>
+
+                            <td><label> Status </label></td>
+                            <td>
+                                <select id="basic_details_status" name="status">
+                                    <option value="<%= basic_glob_data[i].relation_status %>">
+                                        <%= basic_glob_data[i].relation_status %>
+                                    </option>
+
+                                    <% for(let i=0;i<edit_relation_data.length;i++) {%>
+
+                                        <% if(basic_glob_data[0].relation_status !=edit_relation_data[i].option_value) {
+                                            %>
+
+                                            <option value="<%= edit_relation_data[i].option_value %>">
+                                                <%= edit_relation_data[i].option_value %>
+                                            </option>
+                                            <% } %>
+                                                <% } %>
+                                </select>
+                            </td>
+
+
+
+                        </tr>
+                        <tr>
+                            <td><label> Zip Code </label></td>
+                            <td><input type="number" placeholder="Enter your zipcode" name="zip_code"
+                                    id="basic_detail_zipcode" value="<%= basic_glob_data[i].zipcode %>"></td>
+
                             <td><label> Birth Date </label></td>
-                            <td><input type="date" name="dob" id="basic_detail_birthday" value="<%= basic_glob_data[i].DOB %>"></td>
+                            <td><input type="date" name="dob" id="basic_detail_birthday"
+                                    value="<%= basic_glob_data[i].DOB %>"></td>
                         </tr>
 
-                    <% } %>
-                </table>
-                    </div>
+                        <% } %>
+                    </table>
+            </div>
+        </div>
 
+        <div id="education_detail_div">
+            <h2> Education Detail</h2>
+            <% for(let i=0;i<edu_glob_data.length;i++) { %>
+                <table id="education_detail_table" width=1200px;>
+                    <p id="education_detail_btn" onclick="educationDetail()"
+                        style="width:40px; height: 40px; background-color:mediumblue; border-radius: 20px; color: white; display: flex; justify-content: center; font-size: 36px;"
+                        value="+">+</p>
+                    <tr id="education_tr">
+                        <td><label> Course Name </label></td>
+                        <td>
+                            <select id="education_detail_course_name" name="course">
+                                <option value="<%= edu_glob_data[i].course %>">
+                                    <%= edu_glob_data[i].course %>
+                                </option>
+                                <% for(let i=0;i<edit_course_data.length;i++) {%>
+
+                                    <% if(edu_glob_data[0].course !=edit_course_data[i].option_value) { %>
+
+                                        <option value="<%=edit_course_data[i].option_value %>">
+                                            <%= edit_course_data[i].option_value %>
+                                        </option>
+                                        <% } %>
+                                            <% } %>
+                            </select>
+                        </td>
+                        <td><label> University / Board </label></td>
+                        <td>
+                            <select id="education_detail_uni_board" name="university">
+                                <option value="<%= edu_glob_data[i].university %>">
+                                    <%= edu_glob_data[i].university %>
+                                </option>
+                                <% for(let i=0;i<edit_uni_data.length;i++) {%>
+                                    <% if(edu_glob_data[0].course !=edit_uni_data[i].option_value) { %>
+                                        <option value="<%= edit_uni_data[i].option_value %>">
+                                            <%= edit_uni_data[i].option_value %>
+                                        </option>
+                                        <% } %>
+                                            <% } %>
+                            </select>
+
+                        <td><label> Passing Year </label></td>
+                        <td><input type="text" id="education_detail_passing_yr" name="passing_year"
+                                placeholder="Enter your passing year" value="<%=edu_glob_data[i].passing %>"></td>
+                        </td>
+                    </tr>
+                </table>
+                <% } %>
+        </div>
+        
+        
+        <div id="work_exp_div">
+            <h2> work Experience</h2>
+            <% for(let i=0;i<work_glob_data.length;i++) { %>
+                <table id="work_exp_table">
+                    <p id="work_exp_btn" onclick="workExp()"
+                        style="width:40px; height: 40px; background-color:mediumblue; border-radius: 20px; color: white; display: flex; justify-content: center; font-size: 36px;">
+                        +</p>
+                    <tr>
+                        <td><label> Company Name </label></td>
+                        <td><input type="text" id="work_exp_company_name" name="company_name"
+                                placeholder="Enter your company name" value="<%= work_glob_data[i].company_name %>">
+                        </td>
+
+                        <td><label> Designation </label></td>
+                        <td><input type="text" id="work_exp_designation" name="company_designation"
+                                placeholder="Enter your designation"
+                                value="<%= work_glob_data[i].company_designation %>"></td>
+
+                        <td><label> CTC </label></td>
+                        <td><input type="text" id="work_exp_ctc" name="ctc" placeholder="Enter your ctc"
+                                value="<%= work_glob_data[i].ctc %>"></td>
+
+                        <td><label> Joining Date </label></td>
+                        <td><input type="date" name="joining_date" id="work_exp_join_date"
+                                value="<%= work_glob_data[i].joining_date %>"></td>
+
+                        <td><label> Leaving Date </label></td>
+                        <td><input type="date" name="ending_date" id="work_exp_end_date"
+                                value="<%= work_glob_data[i].ending_date %>"></td>
+
+                        <td>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+                <% } %>
+        </div>
+
+        <script>
+                var educationCounter = 2;
+            var workExpCounter = 2;
+            function educationDetail() {
+
+                var courseName = document.getElementsByName('course').value;
+                var UniName = document.getElementById('education_detail_uni_board').value;
+                var passingYear = document.getElementById('education_detail_passing_yr').value;
+                var educationTable = document.getElementById('education_detail_table');
+                var newRow = document.getElementById('new_course');
+                var educationTableString = " ";
+
+                if (courseName == "" || UniName == ""  || passingYear == "") {
+                    alert("field must be filled");
+                }
+                else {
+                    //console.log("in else");
+                    var tr = document.createElement("tr");
+                    educationTableString += `
+            
+            <td><label> Course Name </label></td>
+            <td>
+                <select id="education_detail_course_name${educationCounter}" name="course">
+                                <option value="" >
+                                    Select Course
+                                </option>
+                                <% for(let i=0;i<edit_course_data.length;i++) {%>
+
+                                        <option value="<%=edit_course_data[i].option_value %>">
+                                            <%= edit_course_data[i].option_value %>
+                                        </option>
+                                   
+                                            <% } %>
+                            </select>
+            </td>
+
+            <td><label> University / Board </label></td>
+            <td> 
+                <select id="education_detail_uni_board${educationCounter}" name="university">
+                                <option value="">
+                                   
+                                </option>
+                                <% for(let i=0;i<edit_uni_data.length;i++) {%>
+                                    
+                                        <option value="<%= edit_uni_data[i].option_value %>">
+                                            <%= edit_uni_data[i].option_value %>
+                                        </option>
+                                    
+                                            <% } %>
+                            </select>
+            </td>
+
+            
+
+            <td><label> Passing Year </label></td>
+            <td><input type="text"  id="education_detail_passing_yr${educationCounter}" name ="passing_year" placeholder="Enter your passing year"></td>
+       
+                
+       
+        `;
+                    educationCounter++;
+                    console.log(educationTableString);
+                    tr.innerHTML += `${educationTableString}`;
+                    educationTable.appendChild(tr);
+                    //console.log(tableString);
+                }
+            }
+
+            function workExp() {
+                console.log("Hello World");
+                var companyName = document.getElementById('work_exp_company_name').value;
+                var designation = document.getElementById('work_exp_designation').value;
+                var ctc = document.getElementById('work_exp_ctc').value;
+                var joiningDate = document.getElementById('work_exp_join_date').value;
+                var leavingDate = document.getElementById('work_exp_end_date').value;
+                var expTableID = document.getElementById('work_exp_table');
+                var expTableString = " ";
+
+                if (companyName == "" || designation == "" || ctc == "" || joiningDate == "" || leavingDate == "") {
+                    alert("Value must be filled");
+                }
+                else {
+                    console.log("hello");
+                    var tr = document.createElement("tr");
+                    expTableString += `
+                <td><label> Work Expereince </label></td>
+                <td><input type="text" id="work_exp_company_name${workExpCounter}" name="company_name" placeholder="Enter your company name"></td>
+
+                <td><label> Designation </label></td>
+                <td><input type="text"  id="work_exp_designation${workExpCounter}" name="company_designation" placeholder="Enter your designation"></td>
+
+                <td><label> CTC </label></td>
+                <td><input type="text"  id="work_exp_ctc${workExpCounter}" name="ctc" placeholder="Enter your ctc"></td>
+
+                <td><label> Joining Date </label></td>
+                <td><input type="date" name="joining_date" id="work_exp_join_date${workExpCounter}"></td>
+
+                <td><label> Leaving Date </label></td>
+                <td><input type="date" name="ending_date" id="work_exp_end_date${workExpCounter}"></td>
+              
+                <td>
+                     
+                </td>
+            `;
+                    workExpCounter++;
+                    console.log(expTableString);
+                    tr.innerHTML += `${expTableString}`;
+                    expTableID.appendChild(tr);
+                }
+
+            }
+        </script>
+        <div id="language_detail_div">
+            <h2> Known Language</h2>
+            
+                <table id="language_detail_table">
+                    <% for(var k=0;k<edit_lang_data.length;k++) { %>
+                    <tr>
+                    <% var flag=1; %>                        
+                    <% for(let i=0; i<lang_glob_data.length;i++){ %>
+                        
+                            
+                                
+                                    <% if(lang_glob_data[i].lang_name==edit_lang_data[k].option_value) { %>
+                                        <% flag=0 %>
+                                            
+                                        <td>
+                                            <input type="checkbox" id="<%= lang_glob_data[i].lang_name %>"
+                                                name="lang_name" value="123<%= lang_glob_data[i].lang_name %>" checked>
+                                                <%= lang_glob_data[i].lang_name %>
+                                            </td>
+                                
+                            
+                                <td>
+                                    
+                                    <% let checkRead = lang_glob_data[i].lang_read == "Yes" ? "checked" : "" %>
+                                    <input type="checkbox" id="<%= lang_glob_data[i].lang_name %>"
+                                        value="<%= lang_glob_data[i].lang_name %>" name="lang_read" <%= checkRead %>> Read
+                                </td>
+                                <td>
+
+                                    <% let checkWrite = lang_glob_data[i].lang_write == "Yes" ? "checked" : "" %>
+                                    <input type="checkbox" id="<%= lang_glob_data[i].lang_name %>"
+                                        value="<%= edit_lang_data[i].option_value %>" name="lang_write" <%= checkWrite %> > Write
+                                </td>
+                                <td>
+
+                                    <% let checkSpeak = lang_glob_data[i].lang_speak == "Yes" ? "checked" : "" %>
+                                    <input type="checkbox" id="<%= edit_lang_data[i].option_value %>"
+                                        value="<%= edit_lang_data[i].option_value %>" name="lang_speak"
+                                        <%= checkSpeak %>> Speak
+                                </td>
+                                <% } %>
+                        </tr>
+                        <% } %>
+                        
+                            <% if(flag==1) { %>
+                                <tr>
+                                    
+                                    <td>
+                                    <input type="checkbox" id="<%= edit_lang_data[k].option_value %>" name="lang_name"
+                                        value="<%= edit_lang_data[k].option_value %>" > <%= edit_lang_data[k].option_value %>
+                                    </td>
+
+                                    <td>
+                                        
+                                        <input type="checkbox" id="<%= edit_lang_data[k].option_value %>"
+                                            value="<%= edit_lang_data[k].option_value %>" name="lang_read" > Read
+                                    </td>
+                                    <td>
+
+                                        <input type="checkbox" id="<%= edit_lang_data[k].option_value %>"
+                                            value="<%= edit_lang_data[k].option_value %>" name="lang_write" >Write
+                                    </td>
+                                    <td>
+                                        
+                                        <input type="checkbox" id="<%= edit_lang_data[k].option_value %>"
+                                            value="<%= edit_lang_data[k].option_value %>" name="lang_speak"
+                                            > Speak
+                                    </td>
+                                
+                                <% } %>
+                            </tr>
+                                <% } %>                
+                </table>
+                
+        </div>
+        <div id="tech_detail_div">
+            <h2> Known Technologies</h2>
+            <table id="tech_detail_table">
+                <% for(var i=0;i<edit_tech_data.length;i++){ %>
+                    <tr>
+                    <% flag = 1 %>
+                    <% for(var j=0;j<tech_glob_data.length;j++) {%>
+
+                        <% if(tech_glob_data[j].tech_name == edit_tech_data[i].option_value) { %>
+                            <% flag=0 %>
+                        <td>
+                            <input type="checkbox" id="<%= tech_glob_data[j].tech_name %>" value="<%= tech_glob_data[j].tech_name %>"
+                                name="technology_name" checked> <%= tech_glob_data[j].tech_name %>
+                        </td>
+                        <td>
+                            <% let checkBeginner = tech_glob_data[j].tech_level == "Beginer" ? "checked" : "" %>
+                            <input type="radio" id="beginer" value="Beginer" name="<%= tech_glob_data[j].tech_name %>" <%= checkBeginner %>>
+                            <label> Beginer </label>
+                        </td>
+                        <td>
+                            <% let checkIntermediate = tech_glob_data[j].tech_level == "Mideator" ? "checked" : "" %>
+                            <input type="radio" id="Mideator" value="Mideator" name="<%= tech_glob_data[j].tech_name %>" <%= checkIntermediate %>>
+                            <label> Intermediate </label>
+                        </td>
+                        <td>
+                            <% let checkExpert = tech_glob_data[j].tech_level == "expert" ? "checked" : "" %>
+                            <input type="radio" id="expert" value="expert" name="<%= tech_glob_data[j].tech_name %>" <%= checkExpert %> >
+                            <label> Advance </label>
+                        </td>
+                        <% } %>
+                    </tr>
+                    <% } %>
+                    <tr>
+                        <% if(flag == 1) { %>
+                            <td>
+                                <input type="checkbox" id="<%= edit_tech_data[i].option_value %>" value="<%= edit_tech_data[i].option_value %>"
+                                    name="technology_name"> <%= edit_tech_data[i].option_value %>
+                            </td>
+                            <td>
+    
+                                <input type="radio" id="beginer" value="Beginer" name="<%= edit_tech_data[i].option_value %>">
+                                <label> Beginer </label>
+                            </td>
+                            <td>
+    
+                                <input type="radio" id="Mideator" value="Mideator" name="<%= edit_tech_data[i].option_value %>">
+                                <label> Intermediate </label>
+                            </td>
+                            <td>
+    
+                                <input type="radio" id="expert" value="expert" name="<%= edit_tech_data[i].option_value %>" >
+                                <label> Advance </label>
+                            </td>
+                        <% } %>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+
+        <div id="refrence_detail_div">
+            <h2> Refrence contact</h2>
+            <% for(let i=0;i<ref_glob_data.length;i++) { %>
+                <table id="ref_detail_table">
+                    <tr>
+                        <td><label> Name </label></td>
+                        <td><input type="text" placeholder="Enter your name" name="ref_name" id="ref_detail_ref_name"
+                                value="<%= ref_glob_data[i].ref_name %>"> </td>
+
+
+                        <td><label> Contact Number </label></td>
+                        <td><input type="text" placeholder="Enter your number" name="ref_contact" id="ref_detail_number"
+                                value="<%= ref_glob_data[i].ref_contact %>"> </td>
+
+
+                        <td><label> Relation </label></td>
+                        <td><input type="text" placeholder="Enter your relation" name="ref_relation"
+                                id="ref_detail_relation" value="<%= ref_glob_data[i].ref_relation %>"> </td>
+                    <tr>
+
+                </table>
+                <% } %>
+        </div>
+
+        <div id="prefrence_detail_div">
+            <h2>Prefrences </h2>
+            <% for(let i=0;i<pref_glob_data.length;i++) { %>
+                <table id="prefrence_detail_table">
+                    <tr>
+                        <td>
+                            <select id="prefrence_location" name="location">
+                                <option value="<%= pref_glob_data[i].pref_location %>">
+                                    <%= pref_glob_data[i].pref_location %>
+                                </option>
+                                <% for(let i=0;i<edit_loc_data.length;i++) { %>
+                                    <% if(pref_glob_data[0].pref_location !=edit_loc_data[i].option_value) { %>
+                                        <option value="<%= edit_loc_data[i].option_value %>">
+                                            <%= edit_loc_data[i].option_value %>
+                                        </option>
+                                        <% } %>
+                                            <% } %>
+                            </select>
+                        </td>
+                        <td>
+                            <label> Notice Period </label>
+                            <input type="text" placeholder="Enter your period" id="pref_detail_period"
+                                name="notice_time" value="<%= pref_glob_data[i].pref_notice_time %>">
+
+                            <label> Expected CTC </label>
+                            <input type="text" placeholder="Enter your CTC" id="pref_detail_expected_ctc"
+                                name="expected_ctc" value="<%= pref_glob_data[i].pref_expected_ctc %>">
+
+                            <label> Current CTC </label>
+                            <input type="text" placeholder="Enter your CTC" id="pref_detail_current_ctc"
+                                name="current_ctc" value="<%= pref_glob_data[i].pref_current_ctc %>">
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+                <% } %>
+        </div>
+        <div id="submit_btn">
+            <input type="submit" value="submit" >
+        </div>
+        </form>
 </body>
+
+</>
+
 </html>
