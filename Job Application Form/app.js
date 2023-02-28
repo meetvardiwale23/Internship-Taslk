@@ -661,12 +661,12 @@ app.get("/edit", async (req, res) => {
   var edit_uni_data;
   await new Promise((resolve, reject) => {
     con.query(
-      "SELECT option_value FROM option_master WHERE select_id = 3",
+      "SELECT option_value FROM option_master WHERE select_id = 4",
       (err, uni_data) => {
         if (err) reject(err);
         resolve(uni_data);
         edit_uni_data = uni_data;
-        //console.log(edit_course_data);
+        console.log(edit_uni_data);
       }
     );
   });
@@ -780,6 +780,20 @@ await new Promise((resolve, reject) => {
     );
   });
 
+ // pref department
+  var edit_dept_data;
+  await new Promise((resolve, reject) => {
+    con.query(
+      "SELECT option_value FROM option_master WHERE select_id = 6",
+      (err, dept_data) => {
+        if (err) reject(err);
+        resolve(dept_data);
+        edit_dept_data = dept_data;
+        //console.log(edit_tech_data);
+      }
+    );
+  });
+
   res.render("edit", {
     basic_glob_data,
     edit_state_data,
@@ -796,10 +810,12 @@ await new Promise((resolve, reject) => {
     edit_lang_data,
     tech_glob_data,
     edit_tech_data,
+    edit_dept_data,
   });
 });
 
 app.post('/update',async(req,res)=>{
+  console.log(req.body);
     var candidate_id = req.body.candidate_id;
     console.log("your update candidate id :", candidate_id);
 
@@ -812,9 +828,182 @@ app.post('/update',async(req,res)=>{
    });
 
    // update and insert query for wacademics detail
+  //  console.log(req.body.course);
+  //  console.log(req.body.university);
+  //  console.log(req.body.passing_year);
    await new Promise((resolve,reject)=>{
-     con.query(`UPDATE academic_detial SET company_name='${req.body.course}', WHERE candidate_id=${candidate_id}`)
-   })
+    con.query(`DELETE FROM academic_detail WHERE candidate_id=${candidate_id};`,(err,del_data)=>{
+      for(let i=0;i<req.body.course.length;i++)
+      {
+          con.query(`INSERT INTO academic_detail(course,university,passing,candidate_id) values('${req.body.course[i]}','${req.body.university[i]}','${req.body.passing_year[i]}','${candidate_id}');`,(err,ins_update_data)=>{
+            if(err) reject(err);
+            resolve(ins_update_data);
+        })
+      }
+      
+    })
+});
+  //  console.log("After Delete",req.body.course);
+  //  console.log("After Delete",req.body.university);
+  //  console.log("After Delete",req.body.passing_year);
+  //
+
+  // update prefrence contact
+  await new Promise((resolve,reject)=>{
+    con.query(`UPDATE pref_detail SET pref_location='${req.body.location}',pref_notice_time='${req.body.notice_time}',pref_expected_ctc='${req.body.expected_ctc}',pref_current_ctc='${req.body.current_ctc}',pref_department='${req.body.department}' WHERE candidate_id=${candidate_id};`,(err,pref_update_data)=>{
+      if(err) reject(err);
+      resolve(pref_update_data);
+    })
+  });
+
+  // Update for refrence 
+  await new Promise((resolve,reject)=>{
+    for(let i=0;i<req.body.ref_name.length;i++)
+    {
+      con.query(`UPDATE ref_detail SET ref_name='${req.body.ref_name[i]}',ref_contact='${req.body.ref_contact[i]}',ref_relation='${req.body.ref_relation[i]}' WHERE ref_id=${req.body.ref_id[i]};`,(err,ref_update_data)=>{
+        if(err) reject(err);
+        resolve(ref_update_data);
+      })
+    }
+    
+  });
+
+  //update and insert qury for work experience
+
+  await new Promise((resolve,reject)=>{
+    con.query(`DELETE FROM work_exp_detial WHERE candidate_id=${candidate_id};`,(err,del_data)=>{
+      for(let i=0;i<req.body.company_name.length;i++)
+      {
+          con.query(`INSERT INTO work_exp_detial (company_name,company_designation,ctc,joining_date,ending_date,candidate_id) values('${req.body.company_name[i]}','${req.body.company_designation[i]}','${req.body.ctc[i]}','${req.body.joining_date[i]}','${req.body.ending_date[i]}','${candidate_id}');`,(err,ins_update_data)=>{
+            if(err) reject(err);
+            resolve(ins_update_data);
+        })
+      }
+      
+    })
+});
+  //  console.log("After Delete",req.body.course);
+  //  console.log("After Delete",req.body.university);
+  //  console.log("After Delete",req.body.passing_year);
+  
+  // update and insert for language
+  if (req.body.lang_name == undefined) {
+    req.body.lang_read = [];
+  }
+  if (req.body.lang_read == undefined) {
+    req.body.lang_read = [];
+  }
+  if (req.body.lang_write == undefined) {
+    req.body.lang_write = [];
+  }
+  if (req.body.lang_speak == undefined) {
+    req.body.lang_speak = [];
+  }
+  if(typeof req.body.lang_name == "object")
+  {
+  await new Promise((resolve,reject)=>{
+   
+      con.query(`DELETE FROM lang_detail WHERE candidate_id=${candidate_id};`,(err,del_data)=>{
+        for(let i=0;i<req.body.lang_name.length;i++)
+        {
+          console.log(req.body.lang_name);
+          console.log(req.body.lang_read.includes(req.body.lang_name[i]) ? "Yes" : "No");
+          console.log(req.body.lang_write.includes(req.body.lang_name[i]) ? "Yes" : "No");
+          console.log(req.body.lang_speak.includes(req.body.lang_name[i]) ? "Yes" : "No");
+          con.query(
+            `INSERT INTO lang_detail(lang_name,lang_read,lang_write,lang_speak,candidate_id) values('${
+              req.body.lang_name[i]
+            }','${
+              req.body.lang_read.includes(req.body.lang_name[i]) ? "Yes" : "No"
+            }','${
+              req.body.lang_write.includes(req.body.lang_name[i]) ? "Yes" : "No"
+            }','${
+              req.body.lang_speak.includes(req.body.lang_name[i]) ? "Yes" : "No"
+            }','${candidate_id}');`,
+            (err, lang_result) => {
+              if (err) throw err;
+              resolve(lang_result);
+              console.log("Data inserted in language");
+            }
+          );
+  
+        }   
+      
+    });  
+});
+}else{
+  await new Promise((resolve,reject)=>{
+   
+    con.query(`DELETE FROM lang_detail WHERE candidate_id=${candidate_id};`,(err,del_data)=>{
+      
+        console.log(req.body.lang_name);
+        console.log(req.body.lang_read.includes(req.body.lang_name) ? "Yes" : "No");
+        console.log(req.body.lang_write.includes(req.body.lang_name) ? "Yes" : "No");
+        console.log(req.body.lang_speak.includes(req.body.lang_name) ? "Yes" : "No");
+        con.query(
+          `INSERT INTO lang_detail(lang_name,lang_read,lang_write,lang_speak,candidate_id) values('${
+            req.body.lang_name
+          }','${
+            req.body.lang_read.includes(req.body.lang_name) ? "Yes" : "No"
+          }','${
+            req.body.lang_write.includes(req.body.lang_name) ? "Yes" : "No"
+          }','${
+            req.body.lang_speak.includes(req.body.lang_name) ? "Yes" : "No"
+          }','${candidate_id}');`,
+          (err, lang_result) => {
+            if (err) throw err;
+            resolve(lang_result);
+            console.log("Data inserted in language");
+          }
+        ); 
+    
+  });  
+});
+}
+
+// update for konown language
+if (typeof req.body.technology_name == "object") {
+ 
+    
+    await new Promise((resolve, reject) => {
+      con.query(`DELETE FROM tech_detail WHERE candidate_id=${candidate_id};`,(err,del_data)=>{
+        for (let i = 0; i < req.body.technology_name.length; i++) {
+        var sql = `INSERT INTO tech_detail(tech_name,tech_level,candidate_id) values('${
+          req.body.technology_name[i]
+        }',
+                  '${eval(
+                    "req.body." + req.body.technology_name[i]
+                  )}','${candidate_id}');`
+                  console.log(sql);
+        con.query(sql, (err, tech_data) => {
+            if (err) throw err;
+            console.log(tech_data);
+            resolve(tech_data);
+            console.log("Data is insetred in tech detail");
+          }
+        );
+      }})
+    });
+ 
+} else {
+  await new Promise((resolve, reject) => {
+    con.query(`DELETE FROM tech_detail WHERE candidate_id=${candidate_id};`,(err,del_data)=>{
+      con.query(
+        `INSERT INTO tech_detail(tech_name,tech_level,candidate_id) values('${
+          req.body.technology_name
+        }','${eval("req.body." + req.body.technology_name)}','${candidate_id}');`,
+        (err, tech_data) => {
+          if (err) throw err;
+          resolve(tech_data);
+          console.log("Data is insetred in tech detail");
+        }
+      );
+    })
+    
+  });
+}
+
+
 });
 
 app.listen(port, (err) => {

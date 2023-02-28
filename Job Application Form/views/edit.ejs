@@ -294,15 +294,17 @@
 
         <div id="education_detail_div">
             <h2> Education Detail</h2>
+            <p id="education_detail_btn" onclick="educationDetail()"
+            style="width:40px; height: 40px; background-color:mediumblue; border-radius: 20px; color: white; display: flex; justify-content: center; font-size: 36px;"
+            value="+">+</p>
+            <table id="education_detail_table" width=1200px;>
             <% for(let i=0;i<edu_glob_data.length;i++) { %>
-                <table id="education_detail_table" width=1200px;>
-                    <p id="education_detail_btn" onclick="educationDetail()"
-                        style="width:40px; height: 40px; background-color:mediumblue; border-radius: 20px; color: white; display: flex; justify-content: center; font-size: 36px;"
-                        value="+">+</p>
+               
+                   
                     <tr id="education_tr">
                         <td><label> Course Name </label></td>
                         <td>
-                            <select id="education_detail_course_name" name="course">
+                            <select id="education_detail_course_name<%= i %>" name="course">
                                 <option value="<%= edu_glob_data[i].course %>">
                                     <%= edu_glob_data[i].course %>
                                 </option>
@@ -324,21 +326,23 @@
                                     <%= edu_glob_data[i].university %>
                                 </option>
                                 <% for(let i=0;i<edit_uni_data.length;i++) {%>
-                                    <% if(edu_glob_data[0].course !=edit_uni_data[i].option_value) { %>
+                                    <% if(edu_glob_data[0].university != edit_uni_data[i].option_value) { %>
                                         <option value="<%= edit_uni_data[i].option_value %>">
                                             <%= edit_uni_data[i].option_value %>
                                         </option>
                                         <% } %>
                                             <% } %>
                             </select>
-
+                        </td>
                         <td><label> Passing Year </label></td>
                         <td><input type="text" id="education_detail_passing_yr" name="passing_year"
                                 placeholder="Enter your passing year" value="<%=edu_glob_data[i].passing %>"></td>
-                        </td>
-                    </tr>
-                </table>
-                <% } %>
+                        
+                
+                            </tr>
+                            <% } %>
+                        </table>
+                
         </div>
         
         
@@ -383,7 +387,7 @@
         </div>
 
         <script>
-                var educationCounter = 2;
+                var educationCounter = 3;
             var workExpCounter = 2;
             function educationDetail() {
 
@@ -394,10 +398,10 @@
                 var newRow = document.getElementById('new_course');
                 var educationTableString = " ";
 
-                if (courseName == "" || UniName == ""  || passingYear == "") {
-                    alert("field must be filled");
-                }
-                else {
+                // if (courseName == "" || UniName == ""  || passingYear == "") {
+                //     alert("field must be filled");
+                // }
+                
                     //console.log("in else");
                     var tr = document.createElement("tr");
                     educationTableString += `
@@ -405,7 +409,7 @@
             <td><label> Course Name </label></td>
             <td>
                 <select id="education_detail_course_name${educationCounter}" name="course">
-                                <option value="" >
+                                <option value="" disabled selected hidden >
                                     Select Course
                                 </option>
                                 <% for(let i=0;i<edit_course_data.length;i++) {%>
@@ -421,8 +425,8 @@
             <td><label> University / Board </label></td>
             <td> 
                 <select id="education_detail_uni_board${educationCounter}" name="university">
-                                <option value="">
-                                   
+                                <option value="" disabled selected hidden>
+                                   Select University
                                 </option>
                                 <% for(let i=0;i<edit_uni_data.length;i++) {%>
                                     
@@ -448,7 +452,7 @@
                     educationTable.appendChild(tr);
                     //console.log(tableString);
                 }
-            }
+            
 
             function workExp() {
                 console.log("Hello World");
@@ -510,7 +514,7 @@
                                             
                                         <td>
                                             <input type="checkbox" id="<%= lang_glob_data[i].lang_name %>"
-                                                name="lang_name" value="123<%= lang_glob_data[i].lang_name %>" checked>
+                                                name="lang_name" value="<%= lang_glob_data[i].lang_name %>" checked>
                                                 <%= lang_glob_data[i].lang_name %>
                                             </td>
                                 
@@ -631,6 +635,7 @@
         <div id="refrence_detail_div">
             <h2> Refrence contact</h2>
             <% for(let i=0;i<ref_glob_data.length;i++) { %>
+                <input type="hidden" name="ref_id" value="<%= ref_glob_data[i].ref_id %>">
                 <table id="ref_detail_table">
                     <tr>
                         <td><label> Name </label></td>
@@ -685,7 +690,17 @@
                                 name="current_ctc" value="<%= pref_glob_data[i].pref_current_ctc %>">
                         </td>
                         <td>
-
+                            <select id="prefrence_department" name="department">
+                                <option value="<%= pref_glob_data[i].pref_department %>">
+                                    <%= pref_glob_data[i].pref_department %>
+                                <% for(let i=0;i<edit_dept_data.length;i++) { %>
+                                    <% if(pref_glob_data[0].pref_department != edit_dept_data[i].option_value) { %>
+                                    <option value="<%= edit_dept_data[i].option_value %>">
+                                        <%= edit_dept_data[i].option_value %>
+                                    </option>
+                                    <% } %>
+                                    <% } %>
+                            </select>
                         </td>
                     </tr>
                 </table>

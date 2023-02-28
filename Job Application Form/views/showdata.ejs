@@ -352,10 +352,20 @@ body{
                         <td>
                             ${data[i].DOB}
                         </td>
-                        <td><a href="/details?page=${i}&id=${data[i].candidate_id}">view data</a> </td>
+
+                        <td><a style="color: #ffffff; " href="/details?page=${i}&id=${data[i].candidate_id}"><span class="material-symbols-outlined" style="font-size: 40px;">
+                            visibility
+                            </span></a> 
+                        </td>
+
                         <td>
                             <p id="${data[i].candidate_id}" onclick="deleteAPI(this.id)"> <i
-                                    class="material-icons" style="font-size:48px;color:red">delete</i></p>
+                                    class="material-icons" style="font-size:48px;color:rgb(255, 198, 93);">delete</i></p>
+                        </td>
+
+                        <td><a style="color: #ffffff; " href="/edit?page=${i}&id=${data[i].candidate_id}"><span class="material-symbols-outlined" style="font-size: 40px;">
+                            Edit </span>
+                        </a> 
                         </td>
                         <td><input type="checkbox" id="${data[i].candidate_id}"
                                 value="${data[i].candidate_id}"></td>
