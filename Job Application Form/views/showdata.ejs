@@ -255,12 +255,14 @@ body{
 
     function deleteAllAPI() {
         var delArrData = document.querySelectorAll('input[type= "checkbox"]:checked');
+        console.log(delArrData);
         var delArr = [];
 
         for (var i = 0; i < delArrData.length; i++) {
             var id = delArrData[i].id;
             delArr.push(id);
         }
+
         console.log(delArr);
         if (confirm("sure?") == true) {
             fetch(`http://localhost:4080/deleteAll?id=${delArr}`, {
