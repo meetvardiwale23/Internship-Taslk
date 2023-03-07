@@ -87,6 +87,20 @@ app.post('/insert', async(req,res)=>{
         });
     }
 })
+
+app.post('/updateall', async(req,res)=>{
+    
+    console.log(req.body);
+    
+    for(let i=0;i<req.body.length;i++)
+    {
+        
+        con.query(`UPDATE user_info SET first_name='${req.body[i].fname}', last_name='${req.body[i].lname}', phone_number='${req.body[i].phone_number}', city='${req.body[i].city}', state='${req.body[i].state}' where user_id = ${req.body[i].id};`,(err,single_update)=>{
+            if(err) throw (err)
+            console.log(single_update);
+        })
+    }
+})
 app.listen(port,(err)=>{
     console.log(`Your port is running on , ${port}`);
 })

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        background-image: url("/authentication-task/auth-bg.png");
+    }
+    .formelemet{
+        justify-content: center;
+        width:21%;
+        padding: 1rem 3rem;
+        height: 95vh;
+        margin-left: 10rem;
+        background-color: #111111bb;
+    }
+
+    .label_name{
+        color: aliceblue;
+        font-size: 20px;
+    }
+
+    .title{
+        margin-top: 3rem;
+    }
+    .title h1{
+        color: aliceblue;
+    }
+    .name_div{
+        margin-top: 2rem;
+    }
+    .name{
+        width: 250px;
+        height: 20px;
+    }
+    .password_div{
+        margin-top: 1rem;
+    }
+    .password{
+        width: 250px;
+        height: 20px;
+    }
+    .email_div{
+        margin-top: 1rem;
+    }
+    .email{
+        width: 250px;
+        height: 20px;
+    }
+    .conform_password_div{
+        margin-top: 1rem;
+    }
+    .conform_password{
+        width: 250px;
+        height: 20px;
+    }
+    .btn{
+        margin-top: 2rem;
+    }
+    .signUp{
+        width: 250px;
+        height: 25px;
+        background-color: green;
+        color:aliceblue;
+        padding: 0.2rem;
+
+    }
+
+    .dont_have{
+        position: absolute;
+        bottom: 28px;
+    }
+
+    .footer_logo{
+        position: absolute;
+        right: 200px;
+        bottom: 20px;
+    }
+
+</style>
+<body>
+        <div class="sitewrapper">
+            
+            <div class="formelemet">
+                <div class="logo">
+                    <img src="/authentication-task/logo.svg">
+                </div>
+                <div class="title">
+                    <h1>Welcome Back</h1>
+                </div>
+                
+                <form action="/submit" method="post">
+                        <div class="name_div">
+                            <label class="label_name">Name</label><br>
+                            <input type="text" class="name"  name="name" placeholder="enter your name">
+                        </div>
+
+                        <div class="email_div">
+                            <label class="label_name">email</label><br>
+                            <input type="text" class="email"  name="email" placeholder="enter your email">
+                        </div>
+
+                        <div class="password_div">
+                            <label class="label_name">Password</label><br>
+                            <input type="password" id="password" class="password" onchange="checkPassword()" name="password" placeholder="enter your password">
+                            <label id="err_mssg" style="color: aliceblue;"></label>
+                        </div>
+
+                        <div class="conform_password_div">
+                            <label class="label_name">conform password</label><br>
+                            <input type="password" id="conform_password" class="conform_password" name="conform_password" placeholder="enter your password">
+                        </div>
+
+                        <div class="btn">
+                            <input type="submit" value="Sign Up" class="signUp" onclick="return submitForm() ">
+                        </div>
+                        <div class="dont_have">
+                            <p style="color:aliceblue"> Already have n account? <a href="/login" style="color: orange;">Sign in here</a> </p>
+                        </div>
+                </form>
+            </div>
+            <div class="footer_logo">
+                <img src="/authentication-task/bottom-logo.png">                
+            </div>
+
+        </div>
+        
+</body>
+
+<script>
+    function checkPassword()
+    {
+        var user_name = document.getElementById
+        var password = document.getElementById('password').value;
+        var passwordRegex = /^(?=.*[0-9])[a-zA-Z0-9]{6,16}$/;
+
+        if(passwordRegex.test(password))
+        {
+            document.getElementById('err_mssg').innerHTML = " ";
+        }
+        else
+        {
+            document.getElementById('password').style.borderColor = "red";
+            document.getElementById('err_mssg').innerHTML = "Passowrd length must be between 6-16 char and must include lower case and uppercase";
+        }
+
+    }
+
+    function submitForm()
+    {   
+        console.log("hello world");
+        var password = document.getElementById('password').value;
+        var conform = document.getElementById('conform_password').value;
+
+        console.log(password);
+        console.log(conform);
+        if(password != conform)
+        {
+            alert("Your password dosen't match");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    
+</script>        
+
+</html>
