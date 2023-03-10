@@ -102,12 +102,14 @@
 
                     <div class="email_div">
                         <label class="label_name">Email</label><br>
-                        <input type="text" class="email"  name="email" placeholder="enter your email">
+                        <input type="text" class="email" id="email" name="email" placeholder="enter your email" onchange="checkEmail()">
+                        <label id="errMssg"></label>
                     </div>
 
                     <div class="password_div">
                         <label class="label_name">Password</label><br>
-                        <input type="password" id="password" class="password" name="password" placeholder="enter your password">
+                        <input type="password" id="password" class="password" name="password" onchange="checkPassword()" placeholder="enter your password">
+                        <label id="errMssgPassword"></label>
                     </div>
 
                     <div class="forgot">
@@ -127,5 +129,42 @@
             <div class="footer_logo">
                 <img src="/authentication-task/bottom-logo.png">                
             </div>
+
+            <script>
+                 function checkEmail()
+                 {
+                    var errMssg = document.getElementById('errMssg');
+                    var email = document.getElementById('email').value
+                    fetch(`/verify/email`)
+                    .then(data=>data.json())
+                    .then((data)=>{
+                        console.log(data);
+                        if(data.includes(email))
+                        {   
+                            document.getElementById('errMssg').innerHTML = " ";
+                          
+                        }
+                        else{
+                            document.getElementById('errMssg').innerHTML = "Enter Your Registered Email !!"
+                            document.getElementById('errMssg').style.color = "red";
+                        }                       
+ 
+                    }).catch((err)=>{console.log("catch");console.error(err)});
+                 }
+                 // code is left
+                 function checkPassword()
+                 {
+                    fetch('/verify/password',{
+                        body:JSON.stringify(
+                            {password:document.getElementById('password').val})
+                            
+                    })
+                    .then(res=>res.json())
+                    .then((data) =>{
+                        console.log(data);
+                    }).catch((err)=>{console.log("catch");console.error(err)});
+                 }
+            </script>
 </body>
+
 </html>
