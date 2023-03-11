@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Document</title>
+</head>
+<style>
+    #tableContainer {
+        display: flex;
+        justify-content: center;
+        height: 200px;
+    }
+
+    #titleConcatiner {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<body>
+    <div id="titleConcatiner">
+        <h1>Update Multiple Input Control</h1>
+    </div>
+    <div>
+        <p id="addrow" onclick="addrow()">Add Row</p>
+    </div>
+    <div>
+        <p id="updateAll" onclick="updateallAPI()"> <i class="material-icons"
+            style="color:rgb(255, 198, 93);  ">Update All</i></p>
+    </div>
+    <div id="tableContainer">
+        <form method="POST">
+            <table id="tab">
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone NUmber</th>
+                <th>City</th>
+                <th>State</th>
+
+                <% for(let i=0;i<user_info.length;i++) {%>
+                    <tr>
+                        <td>
+                            <%= user_info[i].user_id %>
+                        </td>
+                        <input type="hidden" id="user_id<%=user_info[i].user_id%>"
+                            value="<%= user_info[i].user_id %>">
+                        <td><input type="text" id="first_name<%=user_info[i].user_id%>"
+                                value="<%= user_info[i].first_name %>"></td>
+                        <td><input type="text" id="last_name<%=user_info[i].user_id%>"
+                                value="<%= user_info[i].last_name %>"></td>
+                        <td><input type="text" id="phone_number<%=user_info[i].user_id%>"
+                                value="<%= user_info[i].phone_number %>"></td>
+                        <td><input type="text" id="city<%=user_info[i].user_id%>" value="<%= user_info[i].city %>"></td>
+                        <td><input type="text" id="state<%=user_info[i].user_id%>" value="<%= user_info[i].state %>">
+                        </td>
+                        <td><input type="checkbox" id="<%= user_info[i].user_id %>"
+                            value="<%= user_info[i].user_id%>" name="checkid">
+                        </td>
+                        <td>
+                            <p id="<% user_info[i].user_id %>" onclick="updateAPI(`<%= user_info[i].user_id %>`)"><span class="material-symbols-outlined">
+                                edit_note
+                                </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <% } %>
+            </table>
+        </form>
+    </div>
+</body>
+<script>
+
+    // function to update single cell
+    function updateAPI(id) {
+    
+        var first_name = document.getElementById(`first_name${id}`).value;
+        var last_name = document.getElementById(`last_name${id}`).value;
+        var phone_number = document.getElementById(`phone_number${id}`).value;
+        var city = document.getElementById(`city${id}`).value;
+        var state = document.getElementById(`state${id}`).value;
+        var id = document.getElementById(`user_id${id}`).value;
+
+        //console.log("your id", id);
+       // console.log(first_name);
+        fetch('/update', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "first_name": first_name,
+                "last_name": last_name,
+                "phone_number": phone_number,
+                "city": city,
+                "state": state,
+                "user_id": id
+            })
+        }).then((response) => {response.json();
+            console.log(response);
+        })
+         .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                })
+        
+
+    }
+    // function to add row
+    var counter = 1;
+    function addrow()
+    {
+        var tab = document.getElementById("tab");
+        var tr = document.createElement("tr");
+       
+        var counter_id = 5;
+        var str = "";
+
+        str += `
+                    <th> ${++counter_id}</th>
+                <tr>
+                        
+                        <input type="hidden" id="user_id${counter}">
+                        <td><input type="text" id="ins_first_name${counter}"  placeholder="Enter first name"></td>
+                        <td><input type="text" id="ins_last_name${counter}"  placeholder="Enter last name"></td>
+                        <td><input type="text" id="ins_phone_number${counter}"  placeholder="Enter phone number"></td>
+                        <td><input type="text" id="ins_city${counter}"  placeholder="Enter city"></td>
+                        <td><input type="text" id="ins_state${counter}"  placeholder="Enter state">
+                        </td>
+                        <td>
+                            <p  onclick="insert(${counter})">Insert
+                            </p>
+                        </td>
+                    </tr>`;
+        counter++;
+        tr.innerHTML +=  `${str}`;
+        tab.appendChild(tr);
+    }
+    // function to insert
+    function insert(id){
+
+        var data=[];
+        for(let i=1;i<counter;i++){
+        var first_name = document.getElementById(`ins_first_name${i}`).value;
+        var last_name = document.getElementById(`ins_last_name${i}`).value;
+        var phone_number = document.getElementById(`ins_phone_number${i}`).value;
+        var city = document.getElementById(`ins_city${i}`).value;
+        var state = document.getElementById(`ins_state${i}`).value;
+        var id = document.getElementById(`user_id${i}`).value;
+        data.push({
+            "fname":first_name,
+            "lname":last_name,
+            "phone_number" :phone_number,
+            "city" : city,
+            "state" : state,
+        })
+        console.log(data);
+        //console.log("your id", id);
+        //console.log(first_name,last_name,phone_number,city,state);
+        }
+        fetch('/insert', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((response) => {response.json();
+            console.log(response);
+        })
+         .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                })
+        
+    }
+    // update all
+    function updateallAPI()
+    {
+        var updateAll = document.querySelectorAll('input[type="checkbox"]:checked');
+        console.log(updateAll);
+        console.log(updateAll.length);
+        //var updateAll = document.getElementsByName("checkid");
+        var updateArr  = [];
+
+        for(let i=0;i<updateAll.length;i++)
+        {
+            var id = updateAll[i].id;
+            console.log(id);
+            updateArr.push(id);
+        }
+        var updatedData = [];
+        for(let i=0;i<updateArr.length;i++)
+        {
+            var first_name = document.getElementById(`first_name`+updateArr[i]).value;
+            var last_name = document.getElementById(`last_name`+updateArr[i]).value;
+            var phone_number = document.getElementById(`phone_number`+updateArr[i]).value;
+            var city = document.getElementById(`city`+updateArr[i]).value;
+            var state = document.getElementById(`state`+updateArr[i]).value;
+            var id = document.getElementById(`user_id`+updateArr[i]).value;
+            // console.log(first_name);
+            // console.log(last_name);
+            // console.log(phone_number);
+            // console.log(city);
+            // console.log(state);
+            
+            updatedData.push({
+                "fname":first_name,
+                "lname":last_name,
+                "phone_number" :phone_number,
+                "city" : city,
+                "state" : state,
+                "id" : id,
+            })
+        }
+        console.log(updatedData);
+       
+        fetch('/updateall', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        }).then((response) => {response.json();
+            console.log(response);
+        })
+         .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                })
+    }
+</script>
+
+</html>

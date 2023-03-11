@@ -1,0 +1,68 @@
+<html>
+<head> 
+            <title>Color Change</title>
+</head>
+<style>
+    #tableID{
+        align:center;
+    }
+    #tableContent{
+        display:flex;
+        justify-content:center;
+        margin:auto
+    }
+    td{
+        background-Color :blue;
+    }
+
+    #buttonContent{
+        display:flex;
+        justify-content:center;
+        margin-top:10px;
+    }
+
+    #title{
+        display:flex;
+        justify-content:center;
+        margin-top:10px;
+        font-size:50px;
+        color:white;
+    }
+    #setTimmer{
+        display:flex;
+        justify-content:center;
+        margin-top:10px;
+        font-size:30px;
+        color:white;
+    }
+
+    h2{
+        display:flex;
+        justify-content:center;
+        margin-top:10px;
+        font-size:40px;
+        color:white;
+    }
+</style>
+<body style="background-color:black">
+
+            <h1 id="title">Color Change Cube</h1>
+            <form>
+            <h2>Timmer: <span id="setTimmer"> </span></h2>
+            <div id="tableContent">
+            <table border=2 id="tableID" style="height:400px; width:400px" >
+                <tr> 
+                    <td id="td1" onclick="generateTable()">  </td>
+                    <td id="td2" onclick="generateTable()">  </td>
+                </tr>
+                <tr > 
+                    <td id="td3" onclick="generateTable()">  </td>
+                    <td id="td4" onclick="generateTable()">  </td>
+                </tr>
+            </table>
+            </div>
+            <h2>Your Score: <span id="dispScore"> </span></h2>                      
+            </form>
+<script src="colorchange.js"></script>
+</body>
+</html>

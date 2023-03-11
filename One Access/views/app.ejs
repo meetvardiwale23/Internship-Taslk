@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background-image: url("/authentication-task/auth-bg.png");
+    }
+
+    .formelemet {
+        justify-content: center;
+        width: 21%;
+        padding: 1rem 3rem;
+        height: 95vh;
+        margin-left: 10rem;
+        background-color: #111111bb;
+    }
+
+    .label_name {
+        color: aliceblue;
+        font-size: 20px;
+    }
+
+    .title {
+        margin-top: 3rem;
+    }
+
+    .title h1 {
+        color: aliceblue;
+    }
+
+    .name_div {
+        margin-top: 2rem;
+    }
+
+    .name {
+        width: 250px;
+        height: 20px;
+    }
+
+    .password_div {
+        margin-top: 1rem;
+    }
+
+    .password {
+        width: 250px;
+        height: 20px;
+    }
+
+    .email_div {
+        margin-top: 1rem;
+    }
+
+    .email {
+        width: 250px;
+        height: 20px;
+    }
+
+    .conform_password_div {
+        margin-top: 1rem;
+    }
+
+    .conform_password {
+        width: 250px;
+        height: 20px;
+    }
+
+    .btn {
+        margin-top: 2rem;
+    }
+
+    .signUp {
+        width: 250px;
+        height: 25px;
+        background-color: green;
+        color: aliceblue;
+        padding: 0.2rem;
+
+    }
+
+    .dont_have {
+        position: absolute;
+        bottom: 28px;
+    }
+
+    .footer_logo {
+        position: absolute;
+        right: 200px;
+        bottom: 20px;
+    }
+</style>
+
+<body>
+    <div class="sitewrapper">
+
+        <div class="formelemet">
+            <div class="logo">
+                <img src="/authentication-task/logo.svg">
+            </div>
+            <div class="title">
+                <h1>Welcome Back</h1>
+            </div>
+
+            <form action="/submit" method="post" onsubmit="return submitForm()">
+                <div class="name_div">
+                    <label class="label_name">Name</label><br>
+                    <input type="text" class="name" id="name" name="name" placeholder="enter your name">
+                    <label id="nameMssg"></label>
+                </div>
+
+                <div class="email_div">
+                    <label class="label_name">email</label><br>
+                    <input type="text" id="email" class="email" onchange="checkRegEmail()" name="email"
+                        placeholder="enter your email">
+                    <labe id="errMssg"></labe>
+                </div>
+
+                <div class="password_div">
+                    <label class="label_name">Password</label><br>
+                    <input type="password" id="password" class="password" onchange="  checkPassword()" name="password"
+                        placeholder="enter your password">
+                    <label id="err_mssg" style="color: aliceblue;"></label>
+                </div>
+
+                <div class="conform_password_div">
+                    <label class="label_name">conform password</label><br>
+                    <input type="password" id="conform_password" class="conform_password" name="conform_password"
+                        placeholder="enter your password">
+                    <label id="conformMssg"></label>
+                </div>
+
+                <div class="btn">
+                    <input type="submit" value="Sign Up" class="signUp" onclick="return submitForm() ">
+                </div>
+                <div class="dont_have">
+                    <p style="color:aliceblue"> Already have n account? <a href="/login" style="color: orange;">Sign in
+                            here</a> </p>
+                </div>
+            </form>
+        </div>
+        <div class="footer_logo">
+            <img src="/authentication-task/bottom-logo.png">
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+
+    function checkRegEmail() {
+
+        var errMssg = document.getElementById('errMssg');
+        var email = document.getElementById('email').value
+
+        //email valid
+
+
+        fetch(`/verify/email`)
+            .then(data => data.json())
+            .then((data) => {
+
+                if (data.includes(email)) {
+                    document.getElementById('errMssg').innerHTML = "This Email Already Exist";
+                    document.getElementById('errMssg').style.color = "red";
+                    return false;
+                }
+                else {
+                    document.getElementById('errMssg').innerHTML = " "
+                }
+
+            }).catch((err) => { console.log("catch"); console.error(err) });
+
+           
+        
+
+    }
+
+    function checkPassword() {
+        var password = document.getElementById('password').value;
+        var passwordRegex = /^(?=.*[0-9])[a-zA-Z0-9]{6,16}$/;
+
+        if (passwordRegex.test(password)) {
+            document.getElementById('err_mssg').innerHTML = " ";
+            document.getElementById('password').style.borderColor = "white";
+        }
+        else {
+            document.getElementById('password').style.borderColor = "red";
+            document.getElementById('err_mssg').innerHTML = "Passowrd length must be between 6-16 char and must include lower case and uppercase";
+        }
+
+    }
+
+
+    function submitForm() {
+
+        var name = document.getElementById('name').value;
+        var password = document.getElementById('password').value;
+        var email =  document.getElementById('email').value;
+        var con_password = document.getElementById('conform_password').value;
+
+        console.log(name);
+        console.log(email)
+        console.log(password);
+        console.log(con_password)
+
+        if (name == "") {
+            document.getElementById("nameMssg").innerHTML = "Name is required";
+            document.getElementById("nameMssg").style.color = "red";
+            return false;
+        }
+
+        if (email == "") {
+            document.getElementById('errMssg').innerHTML = "Email is required";
+            document.getElementById('errMssg').style.color = "red";
+            return false;
+        }
+
+
+
+        if (password == "") {
+            document.getElementById("err_mssg").innerHTML = " Password is required ";
+            document.getElementById("err_mssg").style.color = "red";
+            return false;
+        }
+
+        if (con_password == "") {
+            document.getElementById("conformMssg").innerHTML = " conform Password is required ";
+            document.getElementById("conformMssg").style.color = "red";
+            return false;
+        }
+
+        if (password != conform) {
+            alert("Your password dosen't match");
+            return false;
+        }
+        else {
+            return true;
+        }
+
+
+        fetch('/active', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "email": email,     
+            })
+        }).then((response) => {response.json();
+            console.log(response);
+        })
+         .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                })
+    }
+
+</script>
+
+</html>

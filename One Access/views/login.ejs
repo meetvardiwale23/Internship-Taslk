@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        background-image: url("/authentication-task/auth-bg.png");
+    }
+    .formElements{
+        justify-content: center;
+        width:21%;
+        padding: 1rem 3rem;
+        height: 95vh;
+        margin-left: 10rem;
+        background-color: #111111bb;
+    }
+
+    .title{
+        margin-top: 3rem;
+    }
+
+    .title h1{
+        color: aliceblue;
+    }
+    .label_name{
+        color: aliceblue;
+        font-size: 20px;
+    }
+
+    .password_div{
+        margin-top: 1rem;
+    }
+    .password{
+        width: 250px;
+        height: 20px;
+    }
+    .email_div{
+        margin-top: 2rem;
+    }
+    .email{
+        width: 250px;
+        height: 20px;
+    }
+    .conform_password_div{
+        margin-top: 1rem;
+    }
+    .forgot{
+        margin-top: 1rem;
+    }
+    .conform_password{
+        width: 250px;
+        height: 20px;
+    }
+    .btn{
+        margin-top: 2rem;
+    }
+
+    .btn{
+        margin-top: 2rem;    
+    }
+
+    .signIn{
+        width: 250px;
+        height: 25px;
+        background-color: green;
+        color:aliceblue;
+        padding: 0.2rem;
+
+    }
+
+    .dont_have{
+        position: absolute;
+        bottom: 28px;
+    }
+
+    .footer_logo{
+        position: absolute;
+        right: 200px;
+        bottom: 20px;
+    }
+
+</style>
+<body>
+            
+            <div class="formElements" >
+                <div class="logo">
+                    <img src="/authentication-task/logo.svg">
+                </div>
+                <div class="title">
+                    <h1>Welcome Back</h1>
+                </div>
+
+                <form method="post" action="/onlogin">
+
+                    <div class="email_div">
+                        <label class="label_name">Email</label><br>
+                        <input type="text" class="email" id="email" name="email" placeholder="enter your email" onchange="checkEmail()">
+                        <label id="errMssg"></label>
+                    </div>
+
+                    <div class="password_div">
+                        <label class="label_name">Password</label><br>
+                        <input type="password" id="password" class="password" name="password" onchange="checkPassword()" placeholder="enter your password">
+                        <label id="errMssgPassword"></label>
+                    </div>
+
+                    <div class="forgot">
+                        <p style="color: aliceblue;">Forgot Password? <a href="#" style="color: orange;">Click here</a></p>
+                    </div>
+
+                    <div class="btn">
+                        
+                        <input type="submit" value="submit" class="signIn">
+                    </div>
+
+                    <div class="dont_have">
+                        <p style="color:aliceblue"> Dont have'n account? <a href="/home" style="color: orange;">Sign Up</a> </p>
+                    </div>
+                </form>
+            </div>
+            <div class="footer_logo">
+                <img src="/authentication-task/bottom-logo.png">                
+            </div>
+
+            <script>
+                 function checkEmail()
+                 {
+                    var errMssg = document.getElementById('errMssg');
+                    var email = document.getElementById('email').value
+                    fetch(`/verify/email`)
+                    .then(data=>data.json())
+                    .then((data)=>{
+                        console.log(data);
+                        if(data.includes(email))
+                        {   
+                            document.getElementById('errMssg').innerHTML = " ";
+                          
+                        }
+                        else{
+                            document.getElementById('errMssg').innerHTML = "Enter Your Registered Email !!"
+                            document.getElementById('errMssg').style.color = "red";
+                        }                       
+ 
+                    }).catch((err)=>{console.log("catch");console.error(err)});
+                 }
+                 // code is left
+                 function checkPassword()
+                 {
+                    fetch('/verify/password',{
+                        body:JSON.stringify(
+                            {password:document.getElementById('password').val})
+                            
+                    })
+                    .then(res=>res.json())
+                    .then((data) =>{
+                        console.log(data);
+                    }).catch((err)=>{console.log("catch");console.error(err)});
+                 }
+            </script>
+</body>
+
+</html>
